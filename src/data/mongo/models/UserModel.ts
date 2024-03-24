@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   },
 
   emailValidated: {
-    type: String,
+    type: Boolean,
     default: false,
   },
 
