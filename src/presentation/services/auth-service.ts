@@ -1,6 +1,6 @@
 import { UserModel } from "../../data";
 import { CustomError, UserEntity, UserLoginDto, UserRegisterDto } from "../../domain";
-import { bcrypAdapter } from '../../config/bcrypt';
+import { bcryptAdapter } from '../../config/bcrypt';
 import { JwtAdapter } from "../../config/jwt.adapter";
 import { EmailService } from "./email-service";
 import { envs } from "../../config/envs";
@@ -14,7 +14,7 @@ export class AuthService {
 
     try {
       const user = new UserModel(userRegisterDto);
-      user.password = bcrypAdapter.hash(userRegisterDto.password);
+      user.password = bcryptAdapter.hash(userRegisterDto.password);
       await user.save();
 
       // Email de confirmación 
@@ -36,10 +36,10 @@ export class AuthService {
   public async loginUser (userLoginDto: UserLoginDto) {
     try {
       const existUser = await UserModel.findOne({email: userLoginDto.email});
-      console.log(existUser);
+      console.log('loginUser', existUser);
       
       if (!existUser) throw CustomError.badRequest('Email already not exists');
-      const isMatch = bcrypAdapter.compare(userLoginDto.password, existUser.password);
+      const isMatch = bcryptAdapter.compare(userLoginDto.password, existUser.password);
       
       if (!isMatch) throw CustomError.badRequest('Password is not valid');
       const {password, ...userEntity} = UserEntity.fromObject(existUser);
