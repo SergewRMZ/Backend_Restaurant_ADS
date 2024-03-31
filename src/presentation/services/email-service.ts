@@ -1,4 +1,6 @@
 import nodemailer, { Transporter } from 'nodemailer';
+
+
 export interface SendMailOptions {
   to: string | string[];
   subject: string;
@@ -43,7 +45,7 @@ export class EmailService {
         html: htmlBody,
         attachments: attachements,
       });
-
+      
       console.log( sentInformation );
 
       return true;

@@ -62,7 +62,7 @@ export class AuthService {
     if (!token) throw CustomError.internalServer('Error getting token');
 
     const link = `${envs.WERSERVICE_URL}/auth/validate-email/${ token }`;
-    console.log(link);
+    // console.log(link);
     const html = `
       <h1>Validate your email</h1>
       <p>Click on the following link </p>

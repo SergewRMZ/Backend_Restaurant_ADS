@@ -50,6 +50,8 @@ export class CategoryService {
         page: page,
         limit: limit,
         total: total,
+        next: `/api/categories?page=${page + 1}&limit=${limit}`,
+        previous: (page - 1 > 0) ? `/api/categories?page=${page - 1}&limit=${limit}` : null,
 
         categories: categories.map( category => ({
           id: category.id,
