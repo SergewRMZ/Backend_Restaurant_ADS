@@ -4,6 +4,7 @@ import { bcryptAdapter } from '../../config/bcrypt';
 import { JwtAdapter } from "../../config/jwt.adapter";
 import { EmailService } from "./email-service";
 import { envs } from "../../config/envs";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 export class AuthService {
   constructor (private readonly emailService: EmailService) {}

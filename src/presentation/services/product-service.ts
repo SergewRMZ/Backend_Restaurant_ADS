@@ -26,11 +26,6 @@ export class ProductService {
     const { page, limit } = paginationDto;
 
     try {
-      // const total = await CategoryModel.countDocuments();
-      // const categories = await CategoryModel.find()
-      //   .skip( (page - 1) * limit )
-      //   .limit( limit )
-
       const [total, products] = await Promise.all([
         ProductModel.countDocuments(),
         ProductModel

@@ -14,13 +14,13 @@ export class CreateProductDto {
   static create (props: { [key: string]: any }) : [string?, CreateProductDto?] {
     const { name, available, price, description, user, category } = props;
 
-    if (!name) return ['Mising name'];
-    if (!price) return ['Mising price']; 
+    if (!name) return ['Missing name'];
+    if (!price) return ['Missing price']; 
     
-    if (!user) return ['Mising user']; 
-    if (!Validators.verifyMongoID(user)) return ['User is not valid ID']; 
+    if (!user) return ['Missing user']; 
+    if (!Validators.verifyMongoID(user)) return ['Use is not valid ID']; 
     
-    if (!category) return['Mising Category'];
+    if (!category) return['Missing Category'];
     if (!Validators.verifyMongoID(category)) return ['Category is not valid ID'];
 
     return [undefined, new CreateProductDto(name, available, price, description, user, category)];

@@ -3,11 +3,9 @@ import { CustomError, PaginationDto } from "../../domain";
 import { CreateProductDto } from '../../domain/dtos/product/create-product.dto';
 import { ProductService } from "../services/product-service";
 export class ProductController {
-
   constructor (
     private readonly productService: ProductService
   ) {}
-
 
   private handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {
