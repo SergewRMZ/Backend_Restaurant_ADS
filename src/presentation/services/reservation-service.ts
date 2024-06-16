@@ -2,23 +2,30 @@ import { CustomError, PaginationDto } from '../../domain';
 import { ReservationModel } from '../../data/mongo/models/reservation.model';
 import { CreateReservationDto } from '../../domain/dtos/reservation/reservation.dto';
 import { DeleteReservationDto } from '../../domain/dtos/reservation/reservation-delete.dto';
+import { GetReservationUserDto } from '../../domain/dtos/reservation/reservation-get.dto';
 
 export class ReservationService {
-  constructor () {
-    
-  }
-
+  constructor () { }
   async createReservation (createReservationDto: CreateReservationDto) {
+    const { date, time } = createReservationDto;
+    const existsReservation = await ReservationModel.findOne({ date, time });
+    console.log('La reservación existe', existsReservation);
+    if (existsReservation) {
+      throw CustomError.badRequest('Una reservación con la misma fecha y hora ya existe');
+    }
 
-    try {
-      const reservation = new ReservationModel(createReservationDto);
-      await reservation.save();
-      return reservation;
-    } 
-    
-    catch (error) {
-      CustomError.internalServer(`${error}`);
-    } 
+    else {
+      try {
+        const reservation = new ReservationModel(createReservationDto);
+        console.log('Reservación creada', reservation);
+        await reservation.save();
+        return reservation;
+      }
+      
+      catch (error) {
+        throw CustomError.internalServer(`${error}`);
+      } 
+    }    
   }
 
   async getReservations (paginationDto: PaginationDto) {
@@ -67,5 +74,13 @@ export class ReservationService {
     }
   }
 
-
+  async getUserReservation (getReservationUserDto: GetReservationUserDto) {
+    try {
+      const reservations = await ReservationModel.find({ user: getReservationUserDto.id }).populate('user');
+      console.log(reservations);
+      return reservations;
+    } catch (error) {
+      throw CustomError.internalServer('Internal Server Error');
+    }
+  }
 }

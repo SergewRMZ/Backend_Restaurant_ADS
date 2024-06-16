@@ -5,8 +5,6 @@ import { ReservationController } from './reservation.controller';
 import { AuthMiddleware } from '../middlewares/auth.middleware';
 
 export class ReservationRoutes {
-
-
   static get routes(): Router {
 
     const router = Router();
@@ -16,6 +14,7 @@ export class ReservationRoutes {
     router.get('/', controller.getReservations);
     router.post('/', [AuthMiddleware.validateJWT], controller.createReservation);
     router.delete('/:id', [AuthMiddleware.validateJWT], controller.deleteReservation);
+    router.get('/:id', [AuthMiddleware.validateJWT], controller.getUserReservation);
     return router;
   }
 }

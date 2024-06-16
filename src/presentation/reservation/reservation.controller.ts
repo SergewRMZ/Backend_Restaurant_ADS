@@ -4,6 +4,7 @@ import { CreateReservationDto } from '../../domain/dtos/reservation/reservation.
 import { ReservationService } from "../services/reservation-service";
 import { PaginationDto } from '../../domain/dtos/shared/pagination.dto';
 import { DeleteReservationDto } from '../../domain/dtos/reservation/reservation-delete.dto';
+import { GetReservationUserDto } from "../../domain/dtos/reservation/reservation-get.dto";
 
 export class ReservationController {
   constructor (private readonly reservationService: ReservationService) {}
@@ -43,5 +44,14 @@ export class ReservationController {
     this.reservationService.deleteReservation(deleteReservationDto!)
       .then ( deletedReservation => res.status(201).json('Reservación eliminada correctamente'))
       .catch( error => this.handleError(error, res) );
+  }
+
+  public getUserReservation = async (req: Request, res: Response) => {
+    const [error, getReservationDto] = GetReservationUserDto.create(req.params);
+    if (error) return res.status(400).json({error});
+    
+    this.reservationService.getUserReservation(getReservationDto!)
+      .then( reservations => res.status(201).json(reservations))
+      .catch( error => this.handleError(error, res));
   }
 }
