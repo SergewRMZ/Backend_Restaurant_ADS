@@ -77,7 +77,6 @@ export class ReservationService {
   async getUserReservation (getReservationUserDto: GetReservationUserDto) {
     try {
       const reservations = await ReservationModel.find({ user: getReservationUserDto.id }).populate('user');
-      console.log(reservations);
       return reservations;
     } catch (error) {
       throw CustomError.internalServer('Internal Server Error');

@@ -1,5 +1,5 @@
 import { envs } from "../../config/envs";
-import { CategoryModel, MongoDataBase, ProductModel, UserModel } from "../mongo";
+import { CategoryModel, MongoDataBase, ProductModel, ReservationModel, UserModel } from "../mongo";
 import { seedData } from "./data";
 
 (async() => {
@@ -26,6 +26,7 @@ async function main () {
     UserModel.deleteMany(),
     ProductModel.deleteMany(),
     CategoryModel.deleteMany(),
+    ReservationModel.deleteMany(),
   ]);
 
   // Crear usuarios 
@@ -41,9 +42,6 @@ async function main () {
     })
   );
 
-
-  // Crear productos
-
   const products = await ProductModel.insertMany (
     seedData.products.map (product => {
       return {
@@ -53,6 +51,15 @@ async function main () {
       }
     })
   )
+
+  const reservations = await ReservationModel.insertMany (
+    seedData.reservations.map (reservation => {
+      return {
+        ...reservation,
+        user: users[randomNumber(seedData.users.length - 1)]._id
+      }
+    })
+  );
 
   console.log('Semilla ejecutada correctamente');
 }

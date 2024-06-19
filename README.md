@@ -6,3 +6,9 @@
 4. Llenar la base de datos con la semilla `npm run seed`
 5. Ejecutar `npm run dev` para levantar el proyecto en modo desarrollo
 
+## Opcional
+Entrar a la bash de docker
+
+```
+  docker exec -it ContenedorRestaurant bash
+```

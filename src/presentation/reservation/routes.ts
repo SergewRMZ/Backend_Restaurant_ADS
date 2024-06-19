@@ -7,7 +7,7 @@ import { AuthMiddleware } from '../middlewares/auth.middleware';
 export class ReservationRoutes {
   static get routes(): Router {
 
-    const router = Router();
+    const router = Router(); 
     const productService = new ReservationService();
     const controller = new ReservationController(productService);
 
